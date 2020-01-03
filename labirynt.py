@@ -26,6 +26,7 @@ board = board = [
 
 hero_y = 19
 hero_x = 13
+health = 200.0 # Current Health (float so division doesn't make an int)
 
 # TODO Draw board function
 def drawBoard():
@@ -64,17 +65,17 @@ def startGame():
             print('Przestań szukać błędów w kodzie')
 
 def do_health():
-    health = 200.0     # Current Health (float so division doesn't make an int)
+    global health   
     maxHealth = 200    # Max Health
     healthDashes = 20  # Max Displayed dashes
 
     dashConvert = int(maxHealth/healthDashes)            # Get the number to divide by to convert health to dashes (being 10)
     currentDashes = int(health/dashConvert)              # Convert health to dash count: 200/10 => 20 dashes
     remainingHealth = healthDashes - currentDashes       # Get the health remaining to fill as space => 12 spaces
-    healthDisplay = '-' * currentDashes                  # Convert 8 to 8 dashes as a string:   "--------"
-    remainingDisplay = ' ' * remainingHealth             # Convert 12 to 12 spaces as a string: "            "
+    healthDisplay = '-' * currentDashes                  # Convert dashes as a string:   "--------"
+    remainingDisplay = ' ' * remainingHealth             # Convert  spaces as a string: "            "
     percent = str(int((health/maxHealth)*100)) + "%"     # Get the percent as a whole number:   100%
-
+   
     print("|" + healthDisplay + remainingDisplay + "|")  # Print out textbased healthbar
     print("   HERO HEALTH " + percent)                   # Print the percent
 
@@ -99,8 +100,12 @@ def getch():
     return ch
 
 def wallDetection():
-    
-    print("Głową muru nie przebijesz, idź ścieżka")
+    global health
+    health -= 20
+    print("Palisz się tracisz 10% punktów zdrowia")
+    if health == 0:
+        os.system('clear')
+        print("YOU DIED")
     
 def movement():
     global hero_y, hero_x
