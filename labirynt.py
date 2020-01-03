@@ -26,13 +26,12 @@ board = board = [
 
 hero_y = 19
 hero_x = 13
-x = 0
-y = 0
 
 # TODO Draw board function
-def drawBoard(x,y):
+def drawBoard():
+    y=0
     for row in board:
-        x=0
+        x = 0
         for field in row:
             if x == hero_x and y == hero_y:
                     print(hero, end= '')
@@ -41,6 +40,7 @@ def drawBoard(x,y):
             x+=1
         print()
         y+=1
+    do_health()
 
 def nameHero():
     while True:
@@ -58,10 +58,25 @@ def startGame():
         print('Wpisz start żeby zacząć')
         button_start = input()
         if button_start == 'start' or button_start == 'START' or button_start == 'Start':
-            drawBoard(0,0)
+            drawBoard()
             break
         else:
             print('Przestań szukać błędów w kodzie')
+
+def do_health():
+    health = 200.0     # Current Health (float so division doesn't make an int)
+    maxHealth = 200    # Max Health
+    healthDashes = 20  # Max Displayed dashes
+
+    dashConvert = int(maxHealth/healthDashes)            # Get the number to divide by to convert health to dashes (being 10)
+    currentDashes = int(health/dashConvert)              # Convert health to dash count: 200/10 => 20 dashes
+    remainingHealth = healthDashes - currentDashes       # Get the health remaining to fill as space => 12 spaces
+    healthDisplay = '-' * currentDashes                  # Convert 8 to 8 dashes as a string:   "--------"
+    remainingDisplay = ' ' * remainingHealth             # Convert 12 to 12 spaces as a string: "            "
+    percent = str(int((health/maxHealth)*100)) + "%"     # Get the percent as a whole number:   100%
+
+    print("|" + healthDisplay + remainingDisplay + "|")  # Print out textbased healthbar
+    print("   HERO HEALTH " + percent)                   # Print the percent
 
 def funcWin():
     os.system('clear')
@@ -84,6 +99,7 @@ def getch():
     return ch
 
 def wallDetection():
+    
     print("Głową muru nie przebijesz, idź ścieżka")
     
 def movement():
@@ -96,7 +112,7 @@ def movement():
             if board[hero_y-1][hero_x] == '░':
                 hero_y-=1
                 os.system('clear')
-                drawBoard(0,0)
+                drawBoard()
             else:
                 wallDetection()
         # Move down (y-1)
@@ -105,7 +121,7 @@ def movement():
             if board[hero_y+1][hero_x] == '░':
                 hero_y+=1
                 os.system('clear')
-                drawBoard(0,0)
+                drawBoard()
             elif board[hero_y+1][hero_x] == '∙':
                 functPowrot()
             else:
@@ -117,7 +133,7 @@ def movement():
             if board[hero_y][hero_x-1] == '░':
                 hero_x-=1
                 os.system('clear')
-                drawBoard(0,0)
+                drawBoard()
             else:
                 wallDetection()
 
@@ -126,7 +142,7 @@ def movement():
             if board[hero_y][hero_x+1] == '░':
                 hero_x+=1
                 os.system('clear')
-                drawBoard(0,0)
+                drawBoard()
             elif board[hero_y][hero_x+1] == 'E':
                 funcWin()
             else:
@@ -136,6 +152,7 @@ def movement():
 def main():
     startGame()
     movement()
+    do_health()
 
 main()
 
