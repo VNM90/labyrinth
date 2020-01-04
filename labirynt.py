@@ -3,10 +3,12 @@ import sys, tty, termios, os, random
 hero_y = 19
 hero_x = 13
 health = 200.0
+inv = {'silver sword': 1, 'steel sword': 1, 'orens': 42, 'diamond': 0, 'fisstech':20}
+loot = ['diamond'] # ADDING TO FUNCTION ADDINVENTORY EVERY STEP INCREASE DIAMOND IN TABLE BECAUSE BOARD IS REFRESHED EVERY TIME
 
 def game():
 
-    board = board = [
+    board = [
         ['∙','∙','∙','∙','∙','∙','∙','∙','∙','∙','∙','∙','∙','╔','═','═','╗','╔','═','═','╗','∙','╔','═','═','═','═','═','╗','∙','╔','═','═','╗','∙','∙','∙','∙','∙','∙','∙','╔','═','═','═','╗','∙','∙'],
         ['∙','∙','∙','∙','∙','∙','∙','∙','∙','∙','∙','∙','╔','╝','░','░','║','║','░','░','║','∙','║','░','░','░','░','░','║','∙','║','░','░','║','∙','∙','∙','∙','∙','∙','╔','╝','░','░','░','╚','╗','∙'],
         ['∙','∙','∙','∙','∙','∙','∙','∙','∙','∙','∙','∙','║','░','░','░','║','║','░','░','║','∙','║','░','░','░','░','░','║','∙','║','░','░','╚','═','╗','∙','∙','∙','∙','║','░','░','░','░','░','╚','═'],
@@ -42,7 +44,10 @@ def game():
                 x+=1
             print()
             y+=1
-        do_health()
+        # addInventory(inv,loot) 
+        printTable(inv)
+        # displayInventory(inv)
+        doHealth()
 
     def nameHero():
         while True:
@@ -57,7 +62,7 @@ def game():
 
     def diamonds():
         diamond = 0
-        while diamond <= 4:
+        while diamond <= 4:  # I don't know why print 5 elements
             diamondX = random.randint(0,20) #randomize diamond position NEED TEST
             diamondY = random.randint(0,45) #randomize diamond position NEED TEST
             if board[diamondX][diamondY] == '░':
@@ -92,7 +97,7 @@ def game():
             print ("Nie rozpoznano znaku: LEAVING THE GAME")
             sys.exit(0)
 
-    def do_health():
+    def doHealth():
         global health   
         maxHealth = 200    # Max Health
         healthDashes = 20  # Max Displayed dashes
@@ -177,12 +182,41 @@ def game():
                     wallDetection()
             checking_character = getch()   
 
+    def displayInventory(inventory):
+        for i, count in inventory.items():
+            print(i,count)
+
+    def addInventory(inventory, added_items):
+        for i in added_items:
+            if i in inventory:
+                inventory[i]+=1
+            else:
+                inventory[i]=1
+
+    def printTable(inventory, order=None):
+        itemName = "item name"
+        countName = 'count'
+
+        maxWidthItem = max([len(str(i)) for i in inventory.keys()] + [len(itemName)])
+        maxWidthCount = max([len(str(count)) for count in inventory.values()] + [len(countName)])
+
+        #header
+        print('-' * (maxWidthItem + maxWidthCount + 3))
+        print(f"{itemName:>{maxWidthItem}} | {countName:>{maxWidthCount}}")
+        print('-' * (maxWidthItem + maxWidthCount + 3))
+
+        #rows
+        for i, count in inventory.items():
+            print(f"{i:>{maxWidthItem}} | {count:>{maxWidthCount}}")
+
+        #footer
+        print('-' * (maxWidthItem + maxWidthCount + 3))
+
     def main():
         diamonds()
         startGame()
         movement()
-        do_health()
-       
+
     main()
 
 game()
