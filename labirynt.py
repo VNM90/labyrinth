@@ -30,7 +30,6 @@ def game():
         ['∙','∙','∙','∙','∙','∙','∙','∙','∙','∙','∙','∙','∙','∙','∙','∙','∙','∙','∙','∙','∙','∙','∙','∙','∙','∙','∙','∙','∙','∙','∙','∙','∙','∙','∙','∙','∙','∙','∙','∙','∙','∙','∙','∙','∙','∙','∙','∙'] 
         ]
 
-    # Draw board function
     def drawBoard():
         y=0
         for row in board:
@@ -47,7 +46,7 @@ def game():
 
     def nameHero():
         while True:
-            hero_name = input("Witaj w grze LabirynyRPG, nazwij swojego Wiedźmaka jednym znakiem: ")
+            hero_name = input("Witaj w grze LabirynyRPG, zbierz wszystkie diamenty($) i udaj się do wyjścia(EXIT).\nNazwij swojego Wiedźmaka jednym znakiem: ")
             if len(hero_name) == 1: 
                 break
             else:
@@ -59,15 +58,14 @@ def game():
     def diamonds():
         diamond = 0
         while diamond <= 4:
-            diamondX = random.randint(0,20)
-            diamondY = random.randint(0,45)
+            diamondX = random.randint(0,20) #randomize diamond position NEED TEST
+            diamondY = random.randint(0,45) #randomize diamond position NEED TEST
             if board[diamondX][diamondY] == '░':
-                board[diamondX][diamondY] = "D"
+                board[diamondX][diamondY] = "$" #should be diamond symbol
             else:
                 diamond -= 1
             diamond+=1
 
-    diamonds()
     def startGame():
         while True:
             print('Wpisz start żeby zacząć')
@@ -111,7 +109,7 @@ def game():
 
     def funcWin():
         os.system('clear')
-        print('ZWYCIĘSTWOOOO')
+        print('STAGE CLEAR')
         restartGame()
 
     def functPowrot():
@@ -141,20 +139,17 @@ def game():
     def movement():
         global hero_y, hero_x
         checking_character = getch()
-        while True: 
-            # Move up - collision, movement,(y-1)
-            if(checking_character == 'w' or checking_character == 'W'):
-                # Check position
-                if board[hero_y-1][hero_x] == '░':
+        while True:  
+            if(checking_character == 'w' or checking_character == 'W'): # Move up - collision, movement,(y-1)
+                if board[hero_y-1][hero_x] == '░':  # Check position
                     hero_y-=1
                     os.system('clear')
                     drawBoard()
                 else:
                     wallDetection()
-            # Move down (y-1)
-            if (checking_character == 's' or checking_character == 'S'):
-                # Check position
-                if board[hero_y+1][hero_x] == '░':
+            
+            if (checking_character == 's' or checking_character == 'S'): # Move down (y-1)
+                if board[hero_y+1][hero_x] == '░':  # Check position
                     hero_y+=1
                     os.system('clear')
                     drawBoard()
@@ -163,19 +158,16 @@ def game():
                 else:
                     wallDetection()
 
-            # Move left (x-1)
-            if (checking_character == 'a' or checking_character == 'A'):
-                # Check position
-                if board[hero_y][hero_x-1] == '░':
+            if (checking_character == 'a' or checking_character == 'A'): # Move left (x-1)
+                if board[hero_y][hero_x-1] == '░':  # Check position
                     hero_x-=1
                     os.system('clear')
                     drawBoard()
                 else:
                     wallDetection()
 
-            # Move right (x+1)
-            if (checking_character == 'd' or checking_character == 'D'):
-                if board[hero_y][hero_x+1] == '░':
+            if (checking_character == 'd' or checking_character == 'D'): # Move right (x+1)
+                if board[hero_y][hero_x+1] == '░':  # Check position
                     hero_x+=1
                     os.system('clear')
                     drawBoard()
@@ -186,10 +178,11 @@ def game():
             checking_character = getch()   
 
     def main():
+        diamonds()
         startGame()
         movement()
         do_health()
-
+       
     main()
 
 game()
