@@ -1,4 +1,4 @@
-import sys, tty, termios, os
+import sys, tty, termios, os, random
 
 hero_y = 19
 hero_x = 13
@@ -56,6 +56,18 @@ def game():
 
     hero = nameHero()
 
+    def diamonds():
+        diamond = 0
+        while diamond <= 4:
+            diamondX = random.randint(0,20)
+            diamondY = random.randint(0,45)
+            if board[diamondX][diamondY] == '░':
+                board[diamondX][diamondY] = "D"
+            else:
+                diamond -= 1
+            diamond+=1
+
+    diamonds()
     def startGame():
         while True:
             print('Wpisz start żeby zacząć')
