@@ -4,7 +4,8 @@ hero_y = 19
 hero_x = 13
 health = 200.0
 inv = {'silver sword': 1, 'steel sword': 1, 'orens': 42, 'diamond': 0, 'fisstech':20}
-loot = ['diamond'] # ADDING TO FUNCTION ADDINVENTORY EVERY STEP INCREASE DIAMOND IN TABLE BECAUSE BOARD IS REFRESHED EVERY TIME
+# loot = ['diamond'] 
+# ADDING TO FUNCTION ADDINVENTORY EVERY STEP INCREASE DIAMOND IN TABLE BECAUSE BOARD IS REFRESHED EVERY TIME
 
 def game():
 
@@ -150,6 +151,12 @@ def game():
                     hero_y-=1
                     os.system('clear')
                     drawBoard()
+                elif board[hero_y-1][hero_x] == '$':  # Check position
+                    loot = ['diamond']
+                    hero_y-=1
+                    os.system('clear')
+                    addInventory(inv,loot) 
+                    drawBoard()
                 else:
                     wallDetection()
             
@@ -157,6 +164,12 @@ def game():
                 if board[hero_y+1][hero_x] == '░':  # Check position
                     hero_y+=1
                     os.system('clear')
+                    drawBoard()
+                elif board[hero_y+1][hero_x] == '$':  # Check position
+                    loot = ['diamond']
+                    hero_y+=1
+                    os.system('clear')
+                    addInventory(inv,loot) 
                     drawBoard()
                 elif board[hero_y+1][hero_x] == '∙':
                     functPowrot()
@@ -168,6 +181,12 @@ def game():
                     hero_x-=1
                     os.system('clear')
                     drawBoard()
+                elif board[hero_y][hero_x-1] == '$':  # Check position
+                    loot = ['diamond']
+                    hero_x-=1
+                    os.system('clear')
+                    addInventory(inv,loot) 
+                    drawBoard()
                 else:
                     wallDetection()
 
@@ -175,6 +194,12 @@ def game():
                 if board[hero_y][hero_x+1] == '░':  # Check position
                     hero_x+=1
                     os.system('clear')
+                    drawBoard()
+                elif board[hero_y][hero_x+1] == '$':  # Check position
+                    loot = ['diamond']
+                    hero_x+=1
+                    os.system('clear')
+                    addInventory(inv,loot) 
                     drawBoard()
                 elif board[hero_y][hero_x+1] == 'E':
                     funcWin()
