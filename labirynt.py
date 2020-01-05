@@ -4,8 +4,7 @@ hero_y = 19
 hero_x = 13
 health = 200.0
 inv = {'silver sword': 1, 'steel sword': 1, 'orens': 42, 'diamond': 0, 'fisstech':20}
-# loot = ['diamond'] 
-# ADDING TO FUNCTION ADDINVENTORY EVERY STEP INCREASE DIAMOND IN TABLE BECAUSE BOARD IS REFRESHED EVERY TIME
+# loot = ['steps'] # Count steps function 
 
 def game():
 
@@ -66,7 +65,7 @@ def game():
             diamondX = random.randint(0,20) #randomize diamond position NEED TEST
             diamondY = random.randint(0,45) #randomize diamond position NEED TEST
             if board[diamondX][diamondY] == '░':
-                board[diamondX][diamondY] = "$" #should be diamond symbol
+                board[diamondX][diamondY] = "$" #should be diamond symbol or anything else
             else:
                 diamond -= 1
             diamond+=1
@@ -82,7 +81,7 @@ def game():
                 print('Przestań szukać błędów w kodzie')
 
     def restartGame():
-        loot = ['diamond']
+        # loot = ['diamond']
         global health,hero_x,hero_y
         answer = input("Restart? Y/N ")
         if answer == "N" or answer == 'n':
@@ -136,14 +135,23 @@ def game():
 
     def wallDetection():
         global health,hero_x,hero_y
-        health -= 20
-        print("Palisz się tracisz 10% punktów zdrowia")
-        if health == 0:
-            os.system('clear')
-            print("YOU DIED")
-            restartGame()
-       
+        if board[hero_y][hero_x+1] == 'E':
+            health -= 40
+            print("Uderzyłeś głową w zamknięte drzwi tracisz 20% zdrowia, zbierz diamenty i wróć później")
+            if health <= 0:
+                os.system('clear')
+                print("YOU DIED")
+                restartGame()
+        else:
+            health -= 20
+            print("Palisz się tracisz 10% zdrowia")
+            if health <= 0:
+                os.system('clear')
+                print("YOU DIED")
+                restartGame()
+        
     def movement():
+        dolar = '$'
         global hero_y, hero_x
         checking_character = getch()
         while True:  
@@ -152,10 +160,11 @@ def game():
                     hero_y-=1
                     os.system('clear')
                     drawBoard()
-                elif board[hero_y-1][hero_x] == '$':  # Check position
+                elif board[hero_y-1][hero_x] == dolar:  # Check position
                     loot = ['diamond']
                     hero_y-=1
                     os.system('clear')
+                    
                     addInventory(inv,loot) 
                     drawBoard()
                 else:
@@ -166,10 +175,11 @@ def game():
                     hero_y+=1
                     os.system('clear')
                     drawBoard()
-                elif board[hero_y+1][hero_x] == '$':  # Check position
+                elif board[hero_y+1][hero_x] == dolar:  # Check position
                     loot = ['diamond']
                     hero_y+=1
                     os.system('clear')
+                    
                     addInventory(inv,loot) 
                     drawBoard()
                 elif board[hero_y+1][hero_x] == '∙':
@@ -182,10 +192,11 @@ def game():
                     hero_x-=1
                     os.system('clear')
                     drawBoard()
-                elif board[hero_y][hero_x-1] == '$':  # Check position
+                elif board[hero_y][hero_x-1] == dolar:  # Check position
                     loot = ['diamond']
                     hero_x-=1
                     os.system('clear')
+                    
                     addInventory(inv,loot) 
                     drawBoard()
                 else:
@@ -196,14 +207,16 @@ def game():
                     hero_x+=1
                     os.system('clear')
                     drawBoard()
-                elif board[hero_y][hero_x+1] == '$':  # Check position
+                elif board[hero_y][hero_x+1] == dolar:  # Check position
                     loot = ['diamond']
                     hero_x+=1
                     os.system('clear')
+                   
                     addInventory(inv,loot) 
                     drawBoard()
-                elif board[hero_y][hero_x+1] == 'E':
+                elif board[hero_y][hero_x+1] == 'E' and inv['diamond'] == 5 :
                     funcWin()
+
                 else:
                     wallDetection()
             checking_character = getch()   
