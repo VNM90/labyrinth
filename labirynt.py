@@ -81,7 +81,6 @@ def game():
                 print('Przestań szukać błędów w kodzie')
 
     def restartGame():
-        # loot = ['diamond']
         global health,hero_x,hero_y
         answer = input("Restart? Y/N ")
         if answer == "N" or answer == 'n':
