@@ -45,9 +45,8 @@ def game():
                 x+=1
             print()
             y+=1
-        # addInventory(inv,loot) 
+        
         printTable(inv)
-        # displayInventory(inv)
         doHealth()
 
     def nameHero():
@@ -63,7 +62,7 @@ def game():
 
     def diamonds():
         diamond = 0
-        while diamond <= 4:  # I don't know why print 5 elements
+        while diamond <= 4:  # I don't know why this print 5 elements
             diamondX = random.randint(0,20) #randomize diamond position NEED TEST
             diamondY = random.randint(0,45) #randomize diamond position NEED TEST
             if board[diamondX][diamondY] == '░':
@@ -83,6 +82,7 @@ def game():
                 print('Przestań szukać błędów w kodzie')
 
     def restartGame():
+        loot = ['diamond']
         global health,hero_x,hero_y
         answer = input("Restart? Y/N ")
         if answer == "N" or answer == 'n':
@@ -93,6 +93,7 @@ def game():
             health = 200
             hero_y = 19
             hero_x = 13
+            removeInventory(inv)
             game() 
         else: 
             print ("Nie rozpoznano znaku: LEAVING THE GAME")
@@ -217,6 +218,9 @@ def game():
                 inventory[i]+=1
             else:
                 inventory[i]=1
+
+    def removeInventory(inventory):
+        inventory['diamond'] = 0
 
     def printTable(inventory, order=None):
         itemName = "item name"
