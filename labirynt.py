@@ -64,7 +64,7 @@ def game():
         while diamond <= 4:  # I don't know why this print 5 elements
             diamondX = random.randint(0,20) #randomize diamond position NEED TEST
             diamondY = random.randint(0,45) #randomize diamond position NEED TEST
-            if board[diamondX][diamondY] == '░':
+            if board[diamondX][diamondY] == '░': #and not board[hero_y][hero_x]: #NEED SECOND PART, SOMETIMES PRINT THE BOMB ON THE POSITION OF THE HERO
                 board[diamondX][diamondY] = "$" #should be diamond symbol or anything else
             else:
                 diamond -= 1
@@ -102,12 +102,12 @@ def game():
         maxHealth = 200    # Max Health
         healthDashes = 20  # Max Displayed dashes
 
-        dashConvert = int(maxHealth/healthDashes)            # Get the number to divide by to convert health to dashes (being 10)
+        dashConvert = int(maxHealth/healthDashes)            # Get the number to divide by to convert health to dashes 
         currentDashes = int(health/dashConvert)              # Convert health to dash count: 200/10 => 20 dashes
-        remainingHealth = healthDashes - currentDashes       # Get the health remaining to fill as space => 12 spaces
+        remainingHealth = healthDashes - currentDashes       # Get the health remaining to fill as space 
         healthDisplay = '-' * currentDashes                  # Convert dashes as a string:   "--------"
         remainingDisplay = ' ' * remainingHealth             # Convert  spaces as a string: "            "
-        percent = str(int((health/maxHealth)*100)) + "%"     # Get the percent as a whole number:   100%
+        percent = str(int((health/maxHealth)*100)) + "%"     # Get the percent as a whole number:
     
         print("|" + healthDisplay + remainingDisplay + "|")  # Print out textbased healthbar
         print("   HERO HEALTH " + percent)                   # Print the percent
@@ -117,7 +117,7 @@ def game():
         print('STAGE CLEAR')
         restartGame()
 
-    def functPowrot():
+    def funcReturn():
         os.system('clear')
         print('Wyjście jest w drugą stronę')
         startGame()
@@ -162,8 +162,7 @@ def game():
                 elif board[hero_y-1][hero_x] == dolar:  # Check position
                     loot = ['diamond']
                     hero_y-=1
-                    os.system('clear')
-                    
+                    os.system('clear')    
                     addInventory(inv,loot) 
                     drawBoard()
                 else:
@@ -177,12 +176,11 @@ def game():
                 elif board[hero_y+1][hero_x] == dolar:  # Check position
                     loot = ['diamond']
                     hero_y+=1
-                    os.system('clear')
-                    
+                    os.system('clear') 
                     addInventory(inv,loot) 
                     drawBoard()
                 elif board[hero_y+1][hero_x] == '∙':
-                    functPowrot()
+                    funcReturn()
                 else:
                     wallDetection()
 
@@ -194,8 +192,7 @@ def game():
                 elif board[hero_y][hero_x-1] == dolar:  # Check position
                     loot = ['diamond']
                     hero_x-=1
-                    os.system('clear')
-                    
+                    os.system('clear')                  
                     addInventory(inv,loot) 
                     drawBoard()
                 else:
@@ -210,7 +207,6 @@ def game():
                     loot = ['diamond']
                     hero_x+=1
                     os.system('clear')
-                   
                     addInventory(inv,loot) 
                     drawBoard()
                 elif board[hero_y][hero_x+1] == 'E' and inv['diamond'] == 5 :
@@ -224,10 +220,10 @@ def game():
         for i, count in inventory.items():
             print(i,count)
 
-    def addInventory(inventory, added_items):
-        for i in added_items:
-            if i in inventory:
-                inventory[i]+=1
+    def addInventory(inventory, added_items):    # SAME EASY SOLUTION WORTH TO REMEMBER: import collections
+        for i in added_items:                    # def add_to_inventory(inventory, added_items):
+            if i in inventory:                   # newInv = collections.Counter(added_items) + collections.Counter(inventory)
+                inventory[i]+=1                  # print(collections.Counter(inventory))
             else:
                 inventory[i]=1
 
