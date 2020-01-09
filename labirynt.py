@@ -1,9 +1,9 @@
 import sys, tty, termios, os, random
-
 hero_y = 19
 hero_x = 13
 health = 200.0
 inv = {'silver sword': 1, 'steel sword': 1, 'orens': 42, 'diamond': 0, 'fisstech':20}
+diamondBoard = []
 # loot = ['steps'] # Count steps function 
 
 def game():
@@ -61,10 +61,10 @@ def game():
 
     def diamonds():
         diamond = 0
-        while diamond <= 4:  # I don't know why this print 5 elements
+        while diamond <= 4:  
             diamondX = random.randint(0,20) #randomize diamond position NEED TEST
             diamondY = random.randint(0,45) #randomize diamond position NEED TEST
-            if board[diamondX][diamondY] == '░': #and not board[hero_y][hero_x]: #NEED SECOND PART, SOMETIMES PRINT THE BOMB ON THE POSITION OF THE HERO
+            if board[diamondX][diamondY] == '░': # and board[diamondX][diamondY] != board[hero_x][hero_y]: #NEED SECOND PART, SOMETIMES PRINT THE DIAMOND ON THE POSITION OF THE HERO
                 board[diamondX][diamondY] = "$" #should be diamond symbol or anything else
             else:
                 diamond -= 1
@@ -162,6 +162,7 @@ def game():
                 elif board[hero_y-1][hero_x] == dolar:  # Check position
                     loot = ['diamond']
                     hero_y-=1
+                    board[hero_y][hero_x] = '░'
                     os.system('clear')    
                     addInventory(inv,loot) 
                     drawBoard()
@@ -176,6 +177,7 @@ def game():
                 elif board[hero_y+1][hero_x] == dolar:  # Check position
                     loot = ['diamond']
                     hero_y+=1
+                    board[hero_y][hero_x] = '░'
                     os.system('clear') 
                     addInventory(inv,loot) 
                     drawBoard()
@@ -192,6 +194,7 @@ def game():
                 elif board[hero_y][hero_x-1] == dolar:  # Check position
                     loot = ['diamond']
                     hero_x-=1
+                    board[hero_y][hero_x] = '░'
                     os.system('clear')                  
                     addInventory(inv,loot) 
                     drawBoard()
@@ -206,12 +209,12 @@ def game():
                 elif board[hero_y][hero_x+1] == dolar:  # Check position
                     loot = ['diamond']
                     hero_x+=1
+                    board[hero_y][hero_x] = '░'
                     os.system('clear')
                     addInventory(inv,loot) 
                     drawBoard()
                 elif board[hero_y][hero_x+1] == 'E' and inv['diamond'] == 5 :
                     funcWin()
-
                 else:
                     wallDetection()
             checking_character = getch()   
