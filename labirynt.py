@@ -3,7 +3,6 @@ hero_y = 19
 hero_x = 13
 health = 200.0
 inv = {'silver sword': 1, 'steel sword': 1, 'orens': 42, 'diamond': 0, 'fisstech':20}
-diamondBoard = []
 # loot = ['steps'] # Count steps function 
 
 def game():
